@@ -14,6 +14,7 @@
     "98du-ui": "^1.4.6",
     "@antv/g2plot": "^1.1.24",
     "@ice/stark-app": "^1.2.0",
+    "@ice/stark-data": "^0.1.2",
     "@tweenjs/tween.js": "^18.6.0",
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
