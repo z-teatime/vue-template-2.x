@@ -9,7 +9,7 @@ export const baseURL = process.env.VUE_APP_BASE_API + `/api`
 const service = axios.create({
   baseURL, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 30 * 1000 // request timeout
+  timeout: 5 * 1000 // request timeout
 })
 
 service.defaults.headers = {

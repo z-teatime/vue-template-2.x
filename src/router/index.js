@@ -75,29 +75,23 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/push',
+    redirect: '/example',
     name: 'home',
     meta: { title: '首页', icon: 'el-icon-position' },
     hidden: true,
   },
   {
-    path: '/push',
+    path: '/example',
     component: Layout,
-    redirect: '/push/manage',
-    meta: { title: '推送管理', icon: 'el-icon-s-unfold' },
+    redirect: '/example/index',
+    meta: { title: 'Example', icon: 'el-icon-s-unfold' },
     children: [
       {
-        path: 'manage',
-        component: () => import('@/views/push/pushManage'),
+        path: 'index',
+        component: () => import('@/views/example'),
         name: 'PushManage',
-        meta: { title: '推送管理', icon: '' },
+        meta: { title: '查询表格', icon: '' },
       },
-      {
-        path: 'manage2',
-        component: () => import('@/views/push/pushManage'),
-        name: 'PushManage2',
-        meta: { title: '推送管理', icon: '' },
-      }
     ]
   },
 ]

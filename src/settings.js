@@ -1,5 +1,5 @@
 module.exports = {
-  title: '统一推送平台',
+  title: 'Admin Example',
 
   /**
    * @type {boolean} true | false

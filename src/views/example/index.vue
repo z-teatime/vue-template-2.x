@@ -1,5 +1,11 @@
 <template>
-  <PushWrap ref="wrap" :load="load" :table-attrs="tableAttrs" :table-listeners="tableListeners" :watermark="$user.watermarkStr">
+  <WidgetClassicView
+    ref="wrap"
+    :load="load"
+    :table-attrs="tableAttrs"
+    :table-listeners="tableListeners"
+    :watermark="$user.watermarkStr"
+  >
     <div slot="filter" class="clearfix filter bd">
       <div class="filter-item">
         <span class="title">渠道包</span>
@@ -85,14 +91,13 @@
         <el-button type="primary" @click="handleSumit">确 定</el-button>
       </span>
     </el-dialog>
-  </PushWrap>
+  </WidgetClassicView>
 </template>
 
 <script>
+import WidgetClassicView from 'widget/views/WClassicView'
 import { cloneDeep } from 'lodash'
 import { dateFormatter } from '@/mixins/tableColFormatter'
-
-import PushWrap from './wrap'
 
 const initFilterData = {
   /**
@@ -119,9 +124,9 @@ const initEditFormData = {
 export default {
   name: 'ChanenlBusinessManage',
   components: {
-    PushWrap,
+    WidgetClassicView,
   },
-  mixins: [PushWrap.Update, dateFormatter],
+  mixins: [WidgetClassicView.Update, dateFormatter],
   data() {
     return {
       tableAttrs: {}, // 表格参数
@@ -139,6 +144,14 @@ export default {
         name: { required: true, message: '请输入应用' },
         channel: { required: true, message: '请输入渠道号' },
       },
+
+      tableData: [{
+        id: 1,
+        name: 'name',
+        channel: 'xy_xxxx',
+        appPackage: '茜柚视频',
+        createTime: new Date(),
+      }],
     }
   },
   computed: {
@@ -162,8 +175,8 @@ export default {
      */
     load(page = 1, pageSize = 10, total = 0) {
       return Promise.resolve({
-        tableData: [{ name: 'name' }],
-        total: 1,
+        tableData: this.tableData,
+        total: this.tableData.length,
       })
     },
     /**
@@ -176,15 +189,25 @@ export default {
     /**
      * 操作-编辑
      */
-    handleRowEdit() {
+    handleRowEdit(scope) {
       this.editMode = 2
       this.editFormVisible = true
+      Object.assign(this.editForm, scope.row)
     },
     /**
      * 操作-删除
      */
-    handleRowDel() {
-
+    handleRowDel(scope) {
+      return this.$confirm('确定移除该记录吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.tableData.splice(scope.$index, 1)
+        this.$nextTick(() => {
+          this.$message.success(`移除成功.`)
+        })
+      })
     },
     /**
      * 添加编辑弹窗关闭回调
