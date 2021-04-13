@@ -131,7 +131,7 @@ export default {
     return {
       tableAttrs: {}, // 表格参数
       tableListeners: undefined, // 表格事件
-      tableData: [], // 表格数据
+      // tableData: [], // 表格数据
 
       filter: cloneDeep(initFilterData), // 搜索条件
       editForm: {
