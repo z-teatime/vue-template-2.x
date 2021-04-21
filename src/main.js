@@ -26,6 +26,8 @@ import * as filters from './filters' // global filters
 import '@/directive/watermark'
 import { getUserName } from './utils/auth'
 
+const pkg = require('../package.json')
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -57,27 +59,62 @@ Vue.config.productionTip = false
 if (isInIcestark()) {
   let vue
   const mountNode = getMountNode()
+
+  // 获取主应用注入的信息
+  // TODO:
+  store.commit('app/setCurProject', starkStore.get('curProject'))
+  starkStore.on('curProject', (route) => {
+    store.commit('app/setCurProject', route)
+  })
+
   registerAppEnter(() => {
-    vue = new Vue({
-      router,
-      store,
-      render: h => h(App)
-    }).$mount('#app')
-    // for vue don't replace mountNode
-    mountNode.innerHTML = ''
-    mountNode.appendChild(vue.$el)
+    // 获取缓存的容器, 不做卸载
+    const rootContainer = getContainer(pkg.name)
+
+    if (rootContainer) {
+      const cacheOptions = getCache(`${pkg.name}-vm`)
+      cacheOptions.vm._router.app = null
+      cacheOptions.vm._router.apps = []
+      cacheOptions.vm._router.history.listeners = []
+      // cacheOptions.vm._router.history.setupListeners()
+      cacheOptions.vm._router.init(cacheOptions.vm)
+
+      const cacheMountNode = document.querySelector('#icestarkNode')
+      cacheMountNode.removeChild(cacheMountNode.querySelector('#app'))
+      cacheMountNode.appendChild(rootContainer)
+    } else {
+      vue = new Vue({
+        router,
+        store,
+        render: h => h(App)
+      }).$mount('#app')
+
+      // for vue don't replace mountNode
+      mountNode.innerHTML = ''
+      mountNode.appendChild(vue.$el)
+
+      // 缓存容器
+      setContainer(pkg.name, vue.$el)
+      setCache(`${pkg.name}-vm`, {
+        Vue,
+        router,
+        vm: vue,
+      })
+      // 清楚容器缓存的时候卸载
+      onuninstall(() => {
+        vue && vue.$destroy()
+
+        // 由于主应用资源持久化(永久保存). 这里的资源不能删除.
+        // perf: 内容负荷很重. 样式也可能容易冲突.
+        // if (window.npushWebpackJsonp) {
+        //   delete window.npushWebpackJsonp
+        // }
+      })
+    }
   })
 
   // make sure the unmount event is triggered
   registerAppLeave(() => {
-    if (window.webpackJsonp) {
-      delete window.webpackJsonp
-    }
-
-    if (window.CKEDITOR) {
-      window.CKEDITOR = null
-    }
-    vue && vue.$destroy()
   })
 } else {
   new Vue({
