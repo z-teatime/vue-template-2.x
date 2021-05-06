@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
+import nestark from '@nestark/auth'
 
 export const baseURL = process.env.VUE_APP_BASE_API + `/api`
 
@@ -30,7 +30,7 @@ service.interceptors.request.use(
       // let each request carry token
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
-      config.headers['Authorization'] = `Bearer ${getToken()}`
+      config.headers['Authorization'] = `Bearer ${nestark.token}`
     }
     return config
   },

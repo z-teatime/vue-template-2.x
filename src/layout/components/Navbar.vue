@@ -54,8 +54,7 @@ import Hamburger from '@/components/Hamburger'
 // import Screenfull from '@/components/Screenfull'
 // import SizeSelect from '@/components/SizeSelect'
 // import Search from '@/components/HeaderSearch'
-import { removeToken } from '@/utils/auth'
-import Login from '@/views/login'
+import nestark from '@nestark/auth'
 
 export default {
   components: {
@@ -78,8 +77,7 @@ export default {
       this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
-      removeToken()
-      Login.methods.goAuth.call(this)
+      nestark.loginOut()
     }
   }
 }

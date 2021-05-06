@@ -1,8 +1,8 @@
 import Vue from 'vue'
-import { getUserName } from '@/utils/auth'
+import nestark from '@nestark/auth'
 import watermark from 'dolphin-watermark'
 
-const watermarkStr = `${getUserName()}#${window.location.host}`
+const watermarkStr = `${nestark.getUserInfo().username}#${window.location.host}`
 
 Vue.directive('watermark', {
   inserted(el) {

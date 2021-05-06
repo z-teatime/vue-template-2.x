@@ -1,7 +1,10 @@
+import nestark from './nestarkAuth'
 import Vue from 'vue'
 
 // import Cookies from 'js-cookie'
 import { isInIcestark, getMountNode, registerAppEnter, registerAppLeave } from '@ice/stark-app'
+import { store as starkStore } from '@ice/stark-data'
+import { getContainer, setContainer, onuninstall, setCache, getCache } from '@/utils/mf-cache'
 
 import 'normalize.css/normalize.css' // a modern alternative to CSS resets
 
@@ -24,7 +27,6 @@ import '@/components'
 import * as filters from './filters' // global filters
 
 import '@/directive/watermark'
-import { getUserName } from './utils/auth'
 
 const pkg = require('../package.json')
 
@@ -41,10 +43,12 @@ const pkg = require('../package.json')
 //   mockXHR()
 // }
 
+const username = nestark.getUserInfo().username
+
 Vue.prototype.$api = api
 Vue.prototype.$user = {
-  name: getUserName(),
-  watermarkStr: getUserName() + `#${window.location.host}`
+  name: username,
+  watermarkStr: username + `#${window.location.host}`
 }
 Vue.use(Widget)
 Vue.use(NeUi)
@@ -73,6 +77,8 @@ if (isInIcestark()) {
 
     if (rootContainer) {
       const cacheOptions = getCache(`${pkg.name}-vm`)
+      // 切换微应用后, 会导致pushState注册的事件全部卸载(ice拦截了pushState)
+      // 这里切回来的时候, 重新注册
       cacheOptions.vm._router.app = null
       cacheOptions.vm._router.apps = []
       cacheOptions.vm._router.history.listeners = []
@@ -105,7 +111,6 @@ if (isInIcestark()) {
         vue && vue.$destroy()
 
         // 由于主应用资源持久化(永久保存). 这里的资源不能删除.
-        // perf: 内容负荷很重. 样式也可能容易冲突.
         // if (window.npushWebpackJsonp) {
         //   delete window.npushWebpackJsonp
         // }
