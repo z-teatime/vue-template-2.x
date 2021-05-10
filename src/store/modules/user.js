@@ -4,7 +4,7 @@ import nestark from '@nestark/auth'
 const state = {
   token: nestark.token,
   name: nestark.getUserInfo().username,
-  avatar: '',
+  avatar: '/img/icons/avatar.png',
   introduction: '',
   roles: []
 }
@@ -37,6 +37,8 @@ const actions = {
         ...data,
         roles: ['admin'],
       }
+    }).catch(() => {
+      commit('SET_AVATAR', '/img/icons/avatar.png')
     })
   },
   // dynamically modify permissions
