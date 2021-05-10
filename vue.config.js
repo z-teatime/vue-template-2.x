@@ -43,6 +43,9 @@ module.exports = {
     },
     // before: require('./mock/mock-server.js'),
 
+    // 支持本地修改host文件修改域名
+    disableHostCheck: true,
+
     // 本地调试允许跨域
     headers: { 'Access-Control-Allow-Origin': '*' },
     // 本地调试刷新问题
