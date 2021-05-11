@@ -8,7 +8,9 @@
     "build:localdev": "vue-cli-service build --mode localdev",
     "build:production": "vue-cli-service build --mode production",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "install:localdev": "npm install --registry=http://192.168.100.8:4873/",
+    "install:production": "npm install --registry=http://58.23.3.114:14873/"
   },
   "dependencies": {
     "98du-ui": "^1.7.9",
