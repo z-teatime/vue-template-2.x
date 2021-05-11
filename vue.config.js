@@ -1,5 +1,7 @@
 'use strict'
 const path = require('path')
+const pkg = require('./package.json')
+const { camelCase } = require('lodash')
 
 function resolve(dir) {
   return path.join(__dirname, dir)
@@ -74,7 +76,7 @@ module.exports = {
       }
     },
     output: {
-      jsonpFunction: 'npushWebpackJsonp'
+      jsonpFunction: camelCase(pkg.name) + 'WebpackJsonp'
     },
   },
   chainWebpack(config) {
