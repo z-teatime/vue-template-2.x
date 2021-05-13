@@ -1,4 +1,4 @@
-import nestark from './nestarkAuth'
+import nestarkAuth from './nestarkAuth'
 import Vue from 'vue'
 
 // import Cookies from 'js-cookie'
@@ -43,7 +43,7 @@ const pkg = require('../package.json')
 //   mockXHR()
 // }
 
-const username = nestark.getUserInfo().username
+const username = nestarkAuth.getUserInfo().username
 
 Vue.prototype.$api = api
 Vue.prototype.$user = {

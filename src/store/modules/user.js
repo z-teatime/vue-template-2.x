@@ -1,9 +1,9 @@
-import nestark from '@nestark/auth'
+import nestarkAuth from '@nestark/auth'
 // import router, { resetRouter } from '@/router'
 
 const state = {
-  token: nestark.token,
-  name: nestark.getUserInfo().username,
+  token: nestarkAuth.token,
+  name: nestarkAuth.getUserInfo().username,
   avatar: '/img/icons/avatar.png',
   introduction: '',
   roles: []
@@ -29,7 +29,7 @@ const mutations = {
 
 const actions = {
   async getInfo({ commit }) {
-    return nestark.getUserInfoAll().then(({ data }) => {
+    return nestarkAuth.getUserInfoAll().then(({ data }) => {
       commit('SET_AVATAR', data.avatar)
       commit('SET_ROLES', ['admin'])
       commit('SET_INTRODUCTION', data.position)

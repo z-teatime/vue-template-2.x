@@ -1,7 +1,9 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '@/store'
-import nestark from '@nestark/auth'
+import nestarkAuth from '@nestark/auth'
+
+console.log('xxxx', nestarkAuth)
 
 export const baseURL = process.env.VUE_APP_BASE_API + `/api`
 
@@ -25,34 +27,22 @@ service.defaults.validateStatus = status => {
 // request interceptor
 service.interceptors.request.use(
   config => {
-    // do something before request is sent
     if (!config.headers['Authorization']) {
-      // let each request carry token
-      // ['X-Token'] is a custom headers key
-      // please modify it according to the actual situation
-      config.headers['Authorization'] = `Bearer ${nestark.token}`
+      config.headers['Authorization'] = `Bearer ${nestarkAuth.token}`
     }
+    // 设置项目ID.
+    // if (nestarkAuth.projectId) {
+    //   config.headers['projectId'] = nestarkAuth.projectId
+    // }
     return config
   },
   error => {
-    // do something with request error
-    console.log(error) // for debug
     return Promise.reject(error)
   }
 )
 
 // response interceptor
 service.interceptors.response.use(
-  /**
-   * If you want to get http information such as headers or status
-   * Please return  response => response
-  */
-
-  /**
-   * Determine the request status by custom code
-   * Here is just an example
-   * You can also judge the status by HTTP Status Code
-   */
   response => {
     const res = response.data
     const code = response.data.code

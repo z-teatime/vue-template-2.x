@@ -4,7 +4,7 @@ import store from './store'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import getPageTitle from '@/utils/get-page-title'
-import nestark from '@nestark/auth'
+import nestarkAuth from '@nestark/auth'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
@@ -18,7 +18,7 @@ router.beforeEach(async(to, from, next) => {
   document.title = getPageTitle(to.meta.title)
 
   // determine whether the user has logged in
-  const hasToken = nestark.token
+  const hasToken = nestarkAuth.token
 
   if (hasToken) {
     if (to.path === '/login') {

@@ -1,6 +1,6 @@
-import nestark from '@nestark/auth'
+import nestarkAuth from '@nestark/auth'
 
 // 接入统一登录
-nestark.start()
+nestarkAuth.start()
 
-export default nestark
+export default nestarkAuth
