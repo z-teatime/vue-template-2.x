@@ -1,5 +1,5 @@
 import nestarkAuth from '@nestark/auth'
-// import router, { resetRouter } from '@/router'
+import router, { resetRouter } from '@/router'
 
 const state = {
   token: nestarkAuth.token,
@@ -48,17 +48,17 @@ const actions = {
     // commit('SET_TOKEN', token)
     // setToken(token)
 
-    // const { roles } = await dispatch('getInfo')
+    const { roles } = await dispatch('getInfo')
 
-    // resetRouter()
+    resetRouter()
 
-    // // generate accessible routes map based on roles
-    // const accessRoutes = await dispatch('permission/generateRoutes', roles, { root: true })
-    // // dynamically add accessible routes
-    // router.addRoutes(accessRoutes)
+    // generate accessible routes map based on roles
+    const accessRoutes = await dispatch('permission/generateRoutes', { roles }, { root: true })
+    // dynamically add accessible routes
+    router.addRoutes(accessRoutes)
 
-    // // reset visited views and cached views
-    // dispatch('tagsView/delAllViews', null, { root: true })
+    // reset visited views and cached views
+    dispatch('tagsView/delAllViews', null, { root: true })
   }
 }
 
