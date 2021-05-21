@@ -12,6 +12,12 @@
     "install:localdev": "npm install --registry=http://192.168.100.8:4873/",
     "install:production": "npm install --registry=http://58.23.3.114:14873/"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint",
+      "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS"
+    }
+  },
   "dependencies": {
     "98du-ui": "^1.7.9",
     "@antv/g2plot": "^1.1.24",
@@ -45,6 +51,8 @@
     "xlsx": "^0.16.9"
   },
   "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-pwa": "~4.5.0",
