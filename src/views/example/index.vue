@@ -43,7 +43,8 @@
     </div>
 
     <template slot="tools">
-      <el-button class="reset" type="text" icon="el-icon-refresh" @click="resetWidth">重置列宽</el-button>
+      <el-button v-permission="`vip`">权限按钮</el-button>
+      <el-button v-permission="`vip`" class="reset" type="text" icon="el-icon-refresh" @click="resetWidth">重置列宽</el-button>
       <el-button type="primary" icon="el-icon-circle-plus-outline" @click="handleAdd">新增</el-button>
     </template>
 

@@ -16,7 +16,6 @@ router.beforeEach(async(to, from, next) => {
 
   // set page title
   document.title = getPageTitle(to.meta.title)
-
   // determine whether the user has logged in
   const hasToken = nestarkAuth.token
 
@@ -30,6 +29,13 @@ router.beforeEach(async(to, from, next) => {
       const hasRoles = store.getters.roles && store.getters.roles.length > 0
 
       if (hasRoles) {
+        // 获取按钮权限信息
+        // to.meta.menuId && api.getMenuActionList({
+        //   menuId: to.meta.menuId,
+        //   projectId: localStorage.getItem('XY_PROJECT_ID'),
+        // }).then(res => {
+        //   localStorage.setItem('XY_MENU_ACTION', JSON.stringify(res || {}))
+        // })
         next()
       } else {
         try {
