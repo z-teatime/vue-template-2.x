@@ -3,8 +3,6 @@ import { Message } from 'element-ui'
 import store from '@/store'
 import nestarkAuth from '@nestark/auth'
 
-console.log('xxxx', nestarkAuth)
-
 export const baseURL = process.env.VUE_APP_BASE_API + `/api`
 
 // create an axios instance

@@ -1,3 +1,3 @@
 module.exports = {
-  extends: ['./node_modules/eslint-plugin-98du']
+  extends: [require.resolve('eslint-plugin-98du')]
 }
