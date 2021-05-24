@@ -25,6 +25,7 @@
     "@ice/stark-data": "^0.1.2",
     "@mirco-front/mf-cache": "^1.0.3",
     "@nestark/auth": "^1.3.2",
+    "@nestark/request": "^1.1.3",
     "@tweenjs/tween.js": "^18.6.0",
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
