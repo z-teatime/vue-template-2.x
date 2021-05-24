@@ -70,6 +70,59 @@ api.getMenu(data => {
 
 
 
+## 📚 路由管理
+
+路由使用 vue-router. 在根目录下的 router 文件配置.
+
+📁 相关代码位置: `src\router\index.js`
+
+```js
+/**
+ * Note: sub-menu only appear when route children.length >= 1
+ * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
+ *
+ * hidden: true                   if set true, item will not show in the sidebar(default is false)
+ * alwaysShow: true               if set true, will always show the root menu
+ *                                if not set alwaysShow, when item has more than one children route,
+ *                                it will becomes nested mode, otherwise not show the root menu
+ * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
+ * name:'router-name'             the name is used by <keep-alive> (must set!!!)
+ * meta : {
+    roles: ['admin','editor']    control the page roles (you can set multiple roles)
+    title: 'title'               the name show in sidebar and breadcrumb (recommend set)
+    icon: 'svg-name'/'el-icon-x' the icon show in the sidebar
+    noCache: true                if set true, the page will no be cached(default is false)
+    affix: true                  if set true, the tag will affix in the tags-view
+    breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
+    activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
+  }
+ */
+```
+
+1. 使 keep-alive 生效必须满足2个条件:
+
+   1.1 **组件名称和路由名称一致.**
+
+   1.2 路由中noCache不为true.
+
+   
+
+## 📚 状态管理
+
+使用 vuex 做状态管理.
+
+命名空间:
+
+1. app: 项目应用的一些配置, 如是否默认开启侧边栏, 标题名称等.
+2. errorLog: 错误日志.
+3. options: 一些全局使用的枚举值.
+4. **permission: 权限相关的数据.**
+5. settings: 项目的一些配置, 如主题颜色, 是否开启标签栏等.
+6. tagsView: 标签栏.
+7. user: 用户相关.
+
+
+
 ## 📚 用户登录
 
 `@nestark/auth`
