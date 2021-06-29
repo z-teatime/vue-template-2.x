@@ -160,6 +160,9 @@ export default {
       return this.editMode === 1 ? '新增' : '编辑'
     },
   },
+  created() {
+    console.log('router', this.$router, this.$route)
+  },
   methods: {
     /**
      * 获取请求参数
