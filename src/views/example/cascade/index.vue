@@ -40,9 +40,7 @@ export default {
     }
   },
   mounted() {
-    this.$nextTick(() => {
-      this.abortPopper = this.watchPopper()
-    })
+    this.$nextTick(this.watchPopper)
   },
   methods: {
     createSearchInput() {
@@ -90,16 +88,14 @@ export default {
       popperEle?.insertBefore(searchEle.$el, popperEle.firstChild)
     },
     watchPopper() {
-      return this.$watch(() => {
+      return (this.abortPopper = this.$watch(() => {
         return this.$refs.vm.dropDownVisible
       }, (val) => {
         if (val && !this.watchPopper.inserted) {
           this.watchPopper.inserted = true
-          this.$nextTick(() => {
-            this.insertSearch(this)
-          })
+          this.$nextTick(this.insertSearch)
         }
-      })
+      }))
     },
   },
   render(createElement) {
@@ -107,16 +103,16 @@ export default {
       props: {
         filterable: true,
         'collapse-tags': true,
-        clearable: true,
         ...this.$attrs,
-        props: {
-          multiple: true,
-          ...this.$attrs.props,
-        },
         'popper-class': this.popperClass,
       },
       on: {
         ...this.$listeners,
+        'visible-change': (val) => {
+          const originVisibleChange = this.$listeners['visible-change'] || this.$listeners.visibleChange
+          originVisibleChange && originVisibleChange(val)
+          if (!val) this.search = ''
+        },
       },
       ref: 'vm',
     })
