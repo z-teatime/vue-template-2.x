@@ -89,5 +89,9 @@
     "svg-sprite-loader": "^5.0.0",
     "svgo": "1.2.0",
     "vue-template-compiler": "^2.6.11"
+  },
+  "vetur": {
+    "tags": "./helper/ne-tags.json",
+    "attributes": "./helper/ne-attributes.json"
   }
 }
